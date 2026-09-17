@@ -6,24 +6,25 @@ on:
   pull_request:
     branches: [ "main", "karsajobs" ]
 
-defaults:
-  run:
-    working-directory: ./karsajobs
-
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Go / Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          node-version: '16'
+          go-version: '1.20'
+          cache: true
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Download Dependencies
+        run: go mod download
 
       - name: Run Tests
-        run: npm test --if-present
+        run: go test ./...
+
+      - name: Build
+        run: go build ./...
