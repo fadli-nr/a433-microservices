@@ -1,7 +1,10 @@
 name: CI Karsajobs Backend
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ "main", "karsajobs" ]
+  pull_request:
+    branches: [ "main", "karsajobs" ]
 
 jobs:
   build-and-test:
@@ -17,6 +20,9 @@ jobs:
 
       - name: Download Dependencies
         run: go mod download
+
+      - name: Run Tests
+        run: go test -v -short ./...
 
       - name: Build Project
         run: go build ./...
