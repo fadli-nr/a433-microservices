@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main", "karsajobs" ]
 
+defaults:
+  run:
+    working-directory: ./karsajobs
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
